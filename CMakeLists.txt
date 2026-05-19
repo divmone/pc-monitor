@@ -35,12 +35,9 @@ target_link_libraries(pc-monitor PRIVATE webui nlohmann_json::nlohmann_json)
 find_package(Threads REQUIRED)
 target_link_libraries(pc-monitor PRIVATE Threads::Threads)
 
-# ── Compile TypeScript: src/frontend/app.ts -> app.js ────────────────
 set(FRONTEND_DIR "${CMAKE_SOURCE_DIR}/src/frontend")
 set(APP_JS       "${FRONTEND_DIR}/app.js")
 
-# find_program may pick up WSL-interop Windows binaries from /mnt/c, which can't
-# operate on Linux paths. The helper re-searches over Linux-native locations.
 function(_find_linux_program out_var name)
     find_program(${out_var} NAMES ${name})
     if(${out_var} MATCHES "^/mnt/")
