@@ -64,15 +64,6 @@ namespace {
         e->return_int(::kill(pid, SIGTERM));
     }
 
-    void on_force_kill(webui::window::event *e) {
-        int pid = static_cast<int>(e->get_int());
-        if (pid <= 1) {
-            e->return_int(-1);
-            return;
-        }
-        e->return_int(::kill(pid, SIGKILL));
-    }
-
     void on_snapshot_request(webui::window::event *e) {
         nlohmann::json j;
         {
@@ -97,7 +88,6 @@ int main(int argc, char **argv) {
     webui::window win;
     win.bind("get_snapshot", on_snapshot_request);
     win.bind("kill_pid", on_kill);
-    win.bind("force_kill", on_force_kill);
 
     auto frontend = locate_frontend(argv[0]);
 
