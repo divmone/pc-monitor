@@ -23,6 +23,11 @@ html, body {
     height: 100%;
 }
 
+body {
+    display: flex;
+    flex-direction: column;
+}
+
 #topbar {
     display: flex;
     gap: 8px;
@@ -80,6 +85,18 @@ html, body {
 
 #proc-section {
     padding: 0 14px 14px;
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.proc-scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    border: 1px solid var(--border);
+    border-radius: 3px;
 }
 
 .proc-header {
@@ -127,6 +144,9 @@ th {
     cursor: pointer;
     color: var(--fg-dim);
     font-weight: 500;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 th.active { color: var(--accent); }

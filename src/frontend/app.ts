@@ -17,7 +17,6 @@ type SortKey = "pid" | "user" | "cpu_pct" | "mem_pct" | "mem_kb" | "state" | "na
 
 declare const webui: any;
 
-const TOP_N = 20;
 const DESC_DEFAULT: ReadonlyArray<SortKey> = ["cpu_pct", "mem_pct", "mem_kb", "pid"];
 
 const state = {
@@ -104,7 +103,7 @@ function sortProcs(procs: ProcRow[]): ProcRow[] {
         return typeof av === "number" && typeof bv === "number"
             ? (av - bv) * dir
             : String(av).localeCompare(String(bv)) * dir;
-    }).slice(0, TOP_N);
+    });
 }
 
 function renderProcs(procs: ProcRow[]): void {

@@ -37,23 +37,25 @@
 
 <section id="proc-section">
     <div class="proc-header">
-        <span>Processes (top 20)</span>
+        <span>Processes (top 50)</span>
         <span class="hint">click a header to sort · double-click a row to SIGTERM</span>
     </div>
-    <table id="proc-table">
-        <thead>
-        <tr>
-            <th data-sort="pid">PID</th>
-            <th data-sort="user">USER</th>
-            <th data-sort="cpu_pct" class="num active">CPU%</th>
-            <th data-sort="mem_pct" class="num">MEM%</th>
-            <th data-sort="mem_kb"  class="num">RSS</th>
-            <th data-sort="state">S</th>
-            <th data-sort="name">NAME</th>
-        </tr>
-        </thead>
-        <tbody id="proc-body"></tbody>
-    </table>
+    <div class="proc-scroll">
+        <table id="proc-table">
+            <thead>
+            <tr>
+                <th data-sort="pid">PID</th>
+                <th data-sort="user">USER</th>
+                <th data-sort="cpu_pct" class="num active">CPU%</th>
+                <th data-sort="mem_pct" class="num">MEM%</th>
+                <th data-sort="mem_kb"  class="num">RSS</th>
+                <th data-sort="state">S</th>
+                <th data-sort="name">NAME</th>
+            </tr>
+            </thead>
+            <tbody id="proc-body"></tbody>
+        </table>
+    </div>
 </section>
 
 <script src="app.js"></script>
