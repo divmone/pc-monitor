@@ -1,5 +1,4 @@
 "use strict";
-const TOP_N = 20;
 const DESC_DEFAULT = ["cpu_pct", "mem_pct", "mem_kb", "pid"];
 const state = {
     sortKey: "cpu_pct",
@@ -12,14 +11,14 @@ const $ = (id) => {
         throw new Error("missing #" + id);
     return el;
 };
-const fmtUptime = (sec) => {
+const formatUptime = (sec) => {
     const s = Math.floor(sec);
     const d = Math.floor(s / 86400);
     const h = Math.floor((s % 86400) / 3600);
     const m = Math.floor((s % 3600) / 60);
     return d > 0 ? `${d}d ${h}h ${m}m` : `${h}h ${m}m`;
 };
-const fmtKb = (kb) => {
+const formatKb = (kb) => {
     if (kb >= 1024 * 1024)
         return (kb / 1024 / 1024).toFixed(1) + " GiB";
     if (kb >= 1024)
@@ -41,7 +40,7 @@ function setBar(prefix, pct, text) {
 }
 function renderHeader(snap) {
     $("host").textContent = snap.hostname || "unknown";
-    $("uptime").textContent = fmtUptime(snap.uptime);
+    $("uptime").textContent = formatUptime(snap.uptime);
     $("load").textContent = snap.load.map(v => v.toFixed(2)).join(" / ");
     $("status").textContent = "live · " + new Date().toLocaleTimeString();
 }
@@ -54,11 +53,11 @@ function renderBars(snap) {
     }
     const m = snap.mem;
     const memPct = m.total_kb > 0 ? 100 * m.used_kb / m.total_kb : 0;
-    setBar("mem", memPct, `${fmtKb(m.used_kb)} / ${fmtKb(m.total_kb)} (${memPct.toFixed(1)}%)`);
+    setBar("mem", memPct, `${formatKb(m.used_kb)} / ${formatKb(m.total_kb)} (${memPct.toFixed(1)}%)`);
     if (m.swap_total_kb > 0) {
         $("swap-row").hidden = false;
         const swapPct = 100 * m.swap_used_kb / m.swap_total_kb;
-        setBar("swap", swapPct, `${fmtKb(m.swap_used_kb)} / ${fmtKb(m.swap_total_kb)} (${swapPct.toFixed(1)}%)`);
+        setBar("swap", swapPct, `${formatKb(m.swap_used_kb)} / ${formatKb(m.swap_total_kb)} (${swapPct.toFixed(1)}%)`);
     }
     else {
         $("swap-row").hidden = true;
@@ -72,7 +71,7 @@ function sortProcs(procs) {
         return typeof av === "number" && typeof bv === "number"
             ? (av - bv) * dir
             : String(av).localeCompare(String(bv)) * dir;
-    }).slice(0, TOP_N);
+    });
 }
 function renderProcs(procs) {
     const body = $("proc-body");
@@ -82,7 +81,7 @@ function renderProcs(procs) {
             <td>${escapeHtml(p.user)}</td>
             <td class="${cpuClass(p.cpu_pct)}">${p.cpu_pct.toFixed(1)}</td>
             <td class="num">${p.mem_pct.toFixed(1)}</td>
-            <td class="num">${fmtKb(p.mem_kb)}</td>
+            <td class="num">${formatKb(p.mem_kb)}</td>
             <td>${p.state}</td>
             <td class="name">${escapeHtml(p.name)}</td>
         </tr>`).join("");
