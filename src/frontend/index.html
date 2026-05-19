@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>pc-monitor</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="webui.js"></script>
+</head>
+<body>
+<header id="topbar">
+    <span id="host">—</span>
+    <span class="sep">·</span>
+    <span>up <span id="uptime">—</span></span>
+    <span class="sep">·</span>
+    <span>load <span id="load">—</span></span>
+    <span class="sep">·</span>
+    <span id="status">connecting…</span>
+</header>
+
+<section id="bars">
+    <div class="bar-row">
+        <span class="bar-label">CPU</span>
+        <div class="bar"><div id="cpu-fill" class="fill"></div></div>
+        <span id="cpu-text" class="bar-text">—</span>
+    </div>
+    <div class="bar-row">
+        <span class="bar-label">Mem</span>
+        <div class="bar"><div id="mem-fill" class="fill"></div></div>
+        <span id="mem-text" class="bar-text">—</span>
+    </div>
+    <div class="bar-row" id="swap-row" hidden>
+        <span class="bar-label">Swap</span>
+        <div class="bar"><div id="swap-fill" class="fill"></div></div>
+        <span id="swap-text" class="bar-text">—</span>
+    </div>
+</section>
+
+<section id="proc-section">
+    <div class="proc-header">
+        <span>Processes (top 20)</span>
+        <span class="hint">click a header to sort · double-click a row to SIGTERM</span>
+    </div>
+    <table id="proc-table">
+        <thead>
+        <tr>
+            <th data-sort="pid">PID</th>
+            <th data-sort="user">USER</th>
+            <th data-sort="cpu_pct" class="num active">CPU%</th>
+            <th data-sort="mem_pct" class="num">MEM%</th>
+            <th data-sort="mem_kb"  class="num">RSS</th>
+            <th data-sort="state">S</th>
+            <th data-sort="name">NAME</th>
+        </tr>
+        </thead>
+        <tbody id="proc-body"></tbody>
+    </table>
+</section>
+
+<script src="app.js"></script>
+</body>
+</html>
